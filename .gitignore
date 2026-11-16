@@ -25,6 +25,7 @@ __pycache__/
 venv/
 
 # Datos locales de MongoDB
+web/data/db/
 data/db/
 *.mongodump/
 
