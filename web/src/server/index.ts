@@ -7,6 +7,7 @@ import { connectDB } from "@server/db";
 import empresasRoutes from "@server/routes/empresas.routes";
 import periodosRoutes from "@server/routes/periodos.routes";
 import calculosRoutes from "@server/routes/calculos.routes";
+import exportRoutes from "@server/routes/export.routes";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use("/api/empresas", empresasRoutes);
 app.use("/api/empresas/:empresaId/periodos", periodosRoutes);
 app.use("/api/calculos", calculosRoutes);
+app.use("/api/export", exportRoutes);
 
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true });

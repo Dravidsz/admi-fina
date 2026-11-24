@@ -58,7 +58,7 @@ Construir una aplicación web full-stack capaz de:
 
 ```
 admi-fina/
-├── web/                              # Aplicación web TanStack + Express
+├── web/                              # Aplicación web TanStack + Express + MongoDB
 │   ├── package.json
 │   ├── vite.config.ts
 │   ├── tsconfig.json
@@ -107,7 +107,6 @@ admi-fina/
 │   ├── 10-autenticacion.md
 │   ├── 11-exportes-reportes.md
 │   └── 12-despliegue.md
-├── sistema_financiero.py             # Módulo Python de referencia
 ├── PLAN_SISTEMA.md
 └── README_SISTEMA.md
 ```
@@ -191,20 +190,19 @@ Cada funcionalidad tiene su propio documento de subplan en `docs/`:
 
 ## 8. Estado actual y próximos pasos
 
-### ✅ Implementado como prototipo
-- Módulo Python `sistema_financiero.py` con todas las fórmulas validadas contra el libro.
-- Ejemplos de Kramer Corporation y Saxton Company.
-- Exportación a Excel.
+### ✅ Implementado
+- Aplicación web con Vite + React + TypeScript + TanStack (Router, Query, Table, Form) + Tailwind CSS.
+- Backend Express + MongoDB con Mongoose.
+- Fórmulas financieras implementadas en TypeScript compartido entre cliente y servidor.
+- Exportación a Excel con ExcelJS.
 
-### 🔜 En desarrollo con TanStack + MongoDB
-1. Estructura base del proyecto TanStack Start.
-2. Conexión a MongoDB con Mongoose.
-3. Modelos de datos.
-4. Server functions para CRUD y cálculos.
-5. Rutas y componentes de UI.
-6. Exportación de reportes.
-7. Autenticación.
-8. Despliegue.
+### 🔜 En desarrollo
+1. Conexión y modelos de MongoDB con Mongoose.
+2. Server functions / rutas API para CRUD y cálculos.
+3. Rutas y componentes de UI.
+4. Exportación de reportes desde la interfaz.
+5. Autenticación.
+6. Despliegue.
 
 ---
 

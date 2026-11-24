@@ -123,3 +123,7 @@ export async function calcularPronostico(
     body: JSON.stringify(input),
   });
 }
+
+export function exportarPeriodoExcel(periodoId: string): void {
+  window.open(`${API_BASE}/export/periodo/${periodoId}/excel`, "_blank");
+}

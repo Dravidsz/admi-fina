@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:all": "concurrently --names \"mongo,dev\" --prefix-colors \"green,blue\" \"npm run db:start\" \"npm run dev\"",
     "dev:client": "vite",
     "dev:server": "tsx watch -r tsconfig-paths/register src/server/index.ts",
+    "db:start": "mkdir -p data/db && mongod --dbpath data/db --bind_ip 127.0.0.1 --port 27017",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "server": "tsx -r tsconfig-paths/register src/server/index.ts",

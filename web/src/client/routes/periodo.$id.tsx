@@ -19,6 +19,7 @@ import {
   getAnalisisHorizontal,
   getDuPont,
   calcularPronostico,
+  exportarPeriodoExcel,
 } from "@/api/api";
 import type {
   EstadoResultadosInput,
@@ -80,9 +81,25 @@ function PeriodoComponent() {
     },
   });
 
+  const datosForm = useForm({
+    defaultValues: {
+      dividendosComunes: periodo.dividendosComunes,
+      arrendamiento: periodo.arrendamiento,
+    },
+    onSubmit: async ({ value }) => {
+      await updatePeriodo(id, value);
+      await queryClient.invalidateQueries({ queryKey: ["periodo", id] });
+      await queryClient.invalidateQueries({ queryKey: ["reportes", id] });
+    },
+  });
+
   useEffect(() => {
     erForm.reset(periodo.estadoResultados as EstadoResultadosInput);
     bgForm.reset(periodo.balanceGeneral as BalanceGeneralInput);
+    datosForm.reset({
+      dividendosComunes: periodo.dividendosComunes,
+      arrendamiento: periodo.arrendamiento,
+    });
   }, [periodo]);
 
   const tabs: { key: TabKey; label: string }[] = [
@@ -103,13 +120,21 @@ function PeriodoComponent() {
           <p className="text-sm text-slate-500">Periodo</p>
           <h1 className="text-3xl font-bold text-blue-900">{periodo.anio}</h1>
         </div>
-        <Link
-          to="/empresas/$id"
-          params={{ id: periodo.empresaId }}
-          className="text-blue-700 hover:underline"
-        >
-          ← Volver a la empresa
-        </Link>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => exportarPeriodoExcel(id)}
+            className="bg-emerald-700 text-white px-4 py-2 rounded hover:bg-emerald-800 text-sm"
+          >
+            Exportar Excel
+          </button>
+          <Link
+            to="/empresas/$id"
+            params={{ id: periodo.empresaId }}
+            className="text-blue-700 hover:underline"
+          >
+            ← Volver a la empresa
+          </Link>
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-2">
@@ -257,6 +282,36 @@ function PeriodoComponent() {
                 className="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800"
               >
                 Guardar balance general
+              </button>
+            </form>
+          </section>
+
+          <section className="bg-white p-6 rounded-lg shadow border border-slate-200">
+            <h2 className="text-xl font-semibold mb-4">Datos adicionales del periodo</h2>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                datosForm.handleSubmit();
+              }}
+              className="space-y-4"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <NumberField
+                  form={datosForm}
+                  name="dividendosComunes"
+                  label="Dividendos en acciones comunes"
+                />
+                <NumberField
+                  form={datosForm}
+                  name="arrendamiento"
+                  label="Arrendamiento (cargos fijos)"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-800"
+              >
+                Guardar datos adicionales
               </button>
             </form>
           </section>
